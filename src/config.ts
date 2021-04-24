@@ -1,5 +1,5 @@
 const config = Object.freeze({
-    databaseUrl: 'postgres://ubaid:Huma@0334@localhost:5432/test',
+    databaseUrl: '',
     webserverPort: 5000
 });
 
