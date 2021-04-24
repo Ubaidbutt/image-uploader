@@ -23,3 +23,5 @@ sequelize.authenticate()
         app.listen(PORT, () => console.log(`The web server is up and listening at PORT ${PORT}`));
     })
     .catch((err) => console.log('Error in database connection: ', err));
+
+export default app;

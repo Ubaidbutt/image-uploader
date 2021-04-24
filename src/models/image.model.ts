@@ -2,16 +2,13 @@ import sequelize from '../dbConnection';
 import {DataTypes} from 'sequelize';
 
 const Image = sequelize.define('images', {
-    name: DataTypes.STRING,
-    data: DataTypes.BLOB('long')
+  id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
+  name: DataTypes.STRING,
+  data: DataTypes.BLOB
 });
 
-sequelize.sync({ force: true })
-  .then(() => {
-    console.log(`Images table created`);
-  })
-  .catch((err) => {
-      console.log('Error: ', err);
-  });
+(async () => {
+  await sequelize.sync({force: true});
+})();
 
 export default Image;
