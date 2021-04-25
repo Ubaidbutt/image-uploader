@@ -31,6 +31,5 @@ The idea was to create an express api where clients can upload an image, the API
 			- Method not allowed
 
 # Learnings
-- Postgresql was a new learning along with the sequelize ORM since its been a long time when I last worked with a SQL database, it has been mostly NoSQL recently
-- I have never worked with storing images locally in a database - it is mostly about storing them on Amazon S3 or azure blob so it was a good experience
-- I had taken some typescript courses and was always interested in exploring it but never got an opportunity to work on an actual project - this was a really cool experience working with express and typescript  
+- Its been some years since I last worked with a SQL based database - setting up Postgresql and working with sequelize ORM was definitely a great learning for me. I got to learn about the similarities between mongoose and sequelize and also some differences like schema, database migrations, etc
+- I was always curious about typescript and wanted to explore it but could never afford some time - the project helped me learn and use typescript with express and SQL
