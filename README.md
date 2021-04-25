@@ -11,7 +11,6 @@ The idea was to create an express api where clients can upload an image, the API
 - This will start the server at PORT 5000 - the port can also be configured from the config file
 # How to test locally?
 - Clone the repository and follow the above "how to run locally" guidelines
-- pnpm/npm run build
 - pnpm run test
 - Note that there is an image named "test.jpg" stored in the directory, it is used in the one of the tests
 
