@@ -1,4 +1,5 @@
 import express, {Router} from 'express';
+import {Request, Response} from 'express';
 const fileUpload = require('express-fileupload');
 
 import {
@@ -10,9 +11,14 @@ imageRouter.use(fileUpload());
 
 imageRouter.route('/')
     .get(getAllImages)
-    .post(createImage);
+    .post(createImage)
+    .put((req: Request, res: Response) => res.status(405).send('Method not allowed'))
+    .delete((req: Request, res: Response) => res.status(405).send('Method not allowed'));
 
 imageRouter.route('/:imageId')
-    .get(getOneImage);
+    .get(getOneImage)
+    .post((req: Request, res: Response) => res.status(405).send('Method not allowed'))
+    .put((req: Request, res: Response) => res.status(405).send('Method not allowed'))
+    .delete((req: Request, res: Response) => res.status(405).send('Method not allowed'));
 
 export default imageRouter;

@@ -98,4 +98,22 @@ describe('Get all images', async () => {
             throw new Error(err);
         }
     });
+
+    it('should return a 404 error when trying a URL that is not available', async () => {
+        try {
+            const response = await chai.request(app).get('/invalidUrl');
+            response.should.have.status(404);
+        } catch (err) {
+            throw new Error(err);
+        }
+    });
+
+    it('should return a 405 method not allowed error if trying an invalid http method', async () => {
+        try {
+            const response = await chai.request(app).put('/images');
+            response.should.have.status(405);
+        } catch (err) {
+            throw new Error(err);
+        }
+    });
 });

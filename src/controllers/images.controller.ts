@@ -62,12 +62,14 @@ const getOneImage = async (req: Request, res: Response) => {
             });
         }
         const imageId = image.id;
+        const imageName = image.name;
         const response: any = await findThumbnail(imageId);
         const base64Image = Buffer.from(image.data).toString('base64');
         return res.status(200).json({
             thumbnail200: response.base64thumbnail200,
             thumbnail300: response.base64thumbnail300,
-            image: base64Image
+            image: base64Image,
+            imageName: imageName
         });
     } catch (err) {
         return res.status(500).send({error: err.message});
