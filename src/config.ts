@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const config = Object.freeze({
     // Replace your postgress URL here
-    databaseUrl: 'postgres://postgres:qwerty123456@localhost:5432/images',
-    webserverPort: 5000
+    databaseUrl: process.env['POSTGRESQL_URL'] || '',
+    webserverPort: process.env['WEBSERVER_PORT'] || null
 });
 
 export default config;
