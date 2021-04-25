@@ -1,5 +1,6 @@
 const config = Object.freeze({
-    databaseUrl: 'postgres://ubaid:Huma@0334@localhost:5432/images',
+    // Replace your postgress URL here
+    databaseUrl: 'postgres://postgres:qwerty123456@localhost:5432/images',
     webserverPort: 5000
 });
 

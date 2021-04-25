@@ -2,19 +2,9 @@ import {
     Request,
     Response
 } from 'express';
-import sharp from 'sharp';
+import {storeThumbnails, findThumbnail} from './thumbnails.controller';
 import Image from '../models/image.model';
-import Thumbnail from '../models/thumbnails.model';
 
-// Helper function to resize images using sharp library
-const resizeImage = async (image: Buffer, height: number, width: number): Promise < Buffer > => {
-    try {
-        const resizedImage = await sharp(image).resize(height, width).toBuffer()
-        return resizedImage;
-    } catch(err) {
-        throw new Error(err);
-    }
-}
 
 // Get all images from the database
 const getAllImages = async (req: Request, res: Response) => {
@@ -38,21 +28,19 @@ const createImage = async (req: any, res: Response) => {
                 error: 'Please attach the image'
             })
         }
+        if (req.files.image == null) {
+            return res.status(400).send({
+                error: 'The key name should be image'
+            });
+        }
         const image = req.files.image;
-        const imageData = image.data;
+        const imageData: Buffer = image.data;
         const imageDatatoStore = {
             name: image.name,
             data: image.data
         };
         const createdImage: any = await Image.create(imageDatatoStore);
-        const thumbnail_300 = await resizeImage(imageData, 300, 300);
-        const thumbnail_200 = await resizeImage(imageData, 200, 200);
-        const thumbnailDatatoStore = {
-            thumbnail300: thumbnail_300,
-            thumbnail200: thumbnail_200,
-            imageId: createdImage.id
-        }
-        const createdThumbnail = await Thumbnail.create(thumbnailDatatoStore);
+        await storeThumbnails(imageData, createdImage.id);
         return res.status(201).json({
             image: createdImage
         });
@@ -66,6 +54,7 @@ const createImage = async (req: any, res: Response) => {
 // Get on image based on the ID
 const getOneImage = async (req: Request, res: Response) => {
     try {
+        // Get the image from Image table
         const image: any = await Image.findByPk(req.params.imageId);
         if (!image) {
             return res.status(404).json({
@@ -73,23 +62,12 @@ const getOneImage = async (req: Request, res: Response) => {
             });
         }
         const imageId = image.id;
-        const thumbnail: any = await Thumbnail.findOne({
-            where: {
-                imageId
-            }
-        });
-        const base64thumbnail300 = Buffer.from(thumbnail.thumbnail300).toString('base64');
-        const base64thumbnail200 = Buffer.from(thumbnail.thumbnail200).toString('base64');
+        const response: any = await findThumbnail(imageId);
         const base64Image = Buffer.from(image.data).toString('base64');
-        const responseObject = {
-            thumbnails: {
-                thumbnail200: base64thumbnail200,
-                thumbnail300: base64thumbnail300
-            },
-            image: base64Image
-        }
         return res.status(200).json({
-            data: responseObject
+            thumbnail200: response.base64thumbnail200,
+            thumbnail300: response.base64thumbnail300,
+            image: base64Image
         });
     } catch (err) {
         return res.status(500).send({error: err.message});

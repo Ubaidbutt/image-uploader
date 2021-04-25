@@ -18,10 +18,16 @@ app.use(bodyParser.json());
 app.use('/images', imageRouter);
 
 sequelize.authenticate()
-    .then(() => {
+    .then(async () => {
         console.log('Sequelize connection created');
+        await sequelize.sync({force: true});
         app.listen(PORT, () => console.log(`The web server is up and listening at PORT ${PORT}`));
+        app.emit('serverStarted');
     })
     .catch((err) => console.log('Error in database connection: ', err));
+
+process.on('uncaughtException', (error) => {
+    console.log('Error: ', error);
+})
 
 export default app;
