@@ -9,7 +9,8 @@ import Image from '../models/image.model';
 // Get all images from the database
 const getAllImages = async (req: Request, res: Response) => {
     try {
-        const images = await Image.findAll();
+        let images: any = await Image.findAll();
+        images = images.map((image: any) => Buffer.from(image.data).toString('base64'));
         return res.status(200).send({
             images: images
         });
