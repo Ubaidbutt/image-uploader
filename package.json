@@ -7,7 +7,7 @@
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p .",
-    "test": "mocha dist/test --timeout 5000"
+    "test": "pnpm run build && mocha dist/test --timeout 5000"
   },
   "author": "ubaidrbutt@outlook.com",
   "license": "ISC",

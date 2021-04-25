@@ -32,7 +32,6 @@ describe('Get all images', async () => {
     it('should return an empty array of images', async () => {
         try {
             const response = await chai.request(app).get('/images');
-            console.log('Response: ', response.body);
             response.should.have.status(200);
             response.body.images.should.be.an('array');
         } catch (err) {
