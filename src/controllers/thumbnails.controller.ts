@@ -1,7 +1,8 @@
 import Thumbnail from '../models/thumbnails.model';
 import sharp from 'sharp';
 
-const createThumbnails = async (image: Buffer, height: number, width: number): Promise < Buffer > => {
+// Helper function using the shape library to resize the original for creating thumbnails
+const createThumbnails = async (image: Buffer, height: number, width: number): Promise <Buffer> => {
     try {
         const resizedImage = await sharp(image).resize(height, width).toBuffer()
         return resizedImage;
@@ -10,6 +11,7 @@ const createThumbnails = async (image: Buffer, height: number, width: number): P
     }
 }
 
+// Create thumbnails of an image and store it in the database
 const storeThumbnails = async (image: Buffer, imageId: number) => {
     try {
         const thumbnail300 = await createThumbnails(image, 300, 300);
@@ -26,6 +28,7 @@ const storeThumbnails = async (image: Buffer, imageId: number) => {
     }
 }
 
+// Find one specific thumbnails of an image based on the ID
 const findThumbnail = async (imageId: number) => {
     try {
         // Find the thumbnail where the imageId matches

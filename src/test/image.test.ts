@@ -15,7 +15,7 @@ import app from '../app';
 
 chai.use(chaiHttp);
 
-describe('Get all images', async () => {
+describe('Image API route', async () => {
     before(async () => {
         await Image.destroy({
             where: {},
